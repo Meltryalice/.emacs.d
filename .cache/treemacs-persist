@@ -1,0 +1,5 @@
+* Default
+** .emacs.d
+ - path :: ~/.emacs.d
+** alice-bot
+ - path :: d:/alice-bot
