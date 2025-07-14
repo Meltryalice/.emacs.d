@@ -17,15 +17,20 @@
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; Enable custom neotree theme (nerd-icons must be installed!)
-  (doom-themes-neotree-config)
+  ;; (doom-themes-neotree-config)
   ;; or for treemacs users
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(use-package all-the-icons
+(use-package nerd-icons
   :ensure t
-  :if (display-graphic-p))
+  :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
 
 (set-face-attribute 'default nil :font (font-spec :family "Maple Mono" :size 25 :slant 'italic))
 (set-fontset-font t 'unicode "FiraCode Nerd Font" nil 'prepend) 
@@ -33,18 +38,8 @@
 (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Maple Mono NF CN" :size 25))
 
 ;; 设置窗口大小，仅仅在图形界面需要设置
-(when (display-graphic-p)
-  (let ((top    0)                                     ; 顶不留空
-        (left   (/ (x-display-pixel-width) 10))        ; 左边空10%
-        (height (round (* 0.8                          ; 窗体高度为0.8倍的显示高度
-                          (/ (x-display-pixel-height)
-                             (frame-char-height))))))
-    (let ((width  (round (* 2.5 height))))             ; 窗体宽度为2.5倍高度
-      (setq default-frame-alist nil)
-      (add-to-list 'default-frame-alist (cons 'top top))
-      (add-to-list 'default-frame-alist (cons 'left left))
-      (add-to-list 'default-frame-alist (cons 'height height))
-      (add-to-list 'default-frame-alist (cons 'width width)))))
+(add-to-list 'default-frame-alist '(width . 90)) ; （可选）设定启动图形界面时的初始 Frame 宽度（字符数）
+(add-to-list 'default-frame-alist '(height . 30)) ; （可选）设定启动图形界面时的初始 Frame 高度（字符数）
 
 ;; 禁用一些GUI特性
 (setq use-dialog-box nil)               ; 鼠标操作不使用对话框
@@ -102,31 +97,6 @@
 (setq split-width-threshold (assoc-default 'width default-frame-alist))
 (setq split-height-threshold nil)
 
-;; yes或no提示设置，通过下面这个函数设置当缓冲区名字匹配到预设的字符串时自动回答yes
-(setq original-y-or-n-p 'y-or-n-p)
-(defalias 'original-y-or-n-p (symbol-function 'y-or-n-p))
-(defun default-yes-sometimes (prompt)
-  "automatically say y when buffer name match following string"
-  (if (or
-	   (string-match "has a running process" prompt)
-	   (string-match "does not exist; create" prompt)
-	   (string-match "modified; kill anyway" prompt)
-	   (string-match "Delete buffer using" prompt)
-	   (string-match "Kill buffer of" prompt)
-	   (string-match "still connected.  Kill it?" prompt)
-	   (string-match "Shutdown the client's kernel" prompt)
-	   (string-match "kill them and exit anyway" prompt)
-	   (string-match "Revert buffer from file" prompt)
-	   (string-match "Kill Dired buffer of" prompt)
-	   (string-match "delete buffer using" prompt)
-       (string-match "Kill all pass entry" prompt)
-       (string-match "for all cursors" prompt)
-	   (string-match "Do you want edit the entry" prompt))
-	  t
-    (original-y-or-n-p prompt)))
-(defalias 'yes-or-no-p 'default-yes-sometimes)
-(defalias 'y-or-n-p 'default-yes-sometimes)
-
 ;; 设置剪贴板历史长度300，默认为60
 (setq kill-ring-max 200)
 
@@ -157,21 +127,13 @@
 ;; 在模式栏上显示当前光标的列号
 (column-number-mode t)
 
-;; 配置所有的编码为UTF-8，参考：
-;; https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-language-environment 'utf-8)
-(set-clipboard-coding-system 'utf-8)
-(set-file-name-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(modify-coding-system-alist 'process "*" 'utf-8)
-(when (display-graphic-p)
-  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+(when (fboundp 'set-charset-priority)
+    (set-charset-priority 'unicode))
+  (prefer-coding-system 'utf-8)
+  (setq locale-coding-system 'utf-8)
+  (setq system-time-locale "C")
+  (unless (eq system-type 'windows-nt)
+    (set-selection-coding-system 'utf-8))
 
 (use-package doom-modeline
   :ensure t

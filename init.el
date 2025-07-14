@@ -48,6 +48,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-ts)
 (require 'init-check)
 (require 'init-eaf)
+(require 'init-web)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
 

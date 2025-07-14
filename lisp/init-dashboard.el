@@ -11,13 +11,14 @@
   (setq dashboard-banner-logo-title "To Alice")
   (setq dashboard-projects-backend 'projectile) 
   (setq dashboard-startup-banner "~/.emacs.d/lisp/pic/logo.png")
-  (setq dashboard-icon-type 'all-the-icons)  ; use `all-the-icons' package
+  (setq dashboard-display-icons-p t) 
+  (setq dashboard-icon-type 'nerd-icons) 
   (setq dashboard-items '((recents . 5)  
     (bookmarks . 5) 
     (projects . 10)))
-  (dashboard-modify-heading-icons '((recents   . "file-text")
-                                    (bookmarks . "book")
-				    (projects  . "briefcase")))
+  (dashboard-modify-heading-icons '((recents   . "nf-oct-history")
+                                    (bookmarks . "nf-oct-bookmark")
+				    (projects  . "nf-oct-briefcase")))
   :hook (after-init . dashboard-open)
   )
 

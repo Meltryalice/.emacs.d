@@ -1,11 +1,10 @@
-;; init-dap.el --- Initialize DAP configurations.	-*- lexical-binding: t -*-
+;; init-dap.el --- Initialize DAP configurations.	-*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
 (use-package dap-mode
   :ensure t
-  :defer 3
-  :after lsp-mode
+  :after lsp-deferred
   :init (add-to-list 'image-types 'svg)
   :commands dap-debug
   :custom
