@@ -39,6 +39,13 @@
   (auto-revert-check-vc-info t)
   (global-auto-revert-non-file-buffers t))
 
+(use-package highlight-indent-guides
+  :ensure t
+  :config
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-responsive t)
+  :hook (prog-mode . highlight-indent-guides-mode))
+
 (electric-pair-mode t)
 (column-number-mode t)
 (add-hook 'prog-mode-hook #'hs-minor-mode)

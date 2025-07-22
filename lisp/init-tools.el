@@ -48,6 +48,10 @@
  :hook (after-init . highlight-symbol-mode)
  :bind ("<f3>" . highlight-symbol))
 
+(use-package dirvish
+ :ensure t
+ :hook (after-init . dirvish-override-dired-mode))
+
 (provide 'init-tools)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

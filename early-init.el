@@ -1,5 +1,4 @@
-
-;;; early-init.el --- Early initialization. -*- lexical-binding: t -*-
+;;; early-init.el --- Early initialization. -*- lexical-binding: t; -*-
 
 ;;; Code:
 
@@ -12,7 +11,9 @@
       (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
 (setq native-comp-deferred-compilation nil
-      native-comp-jit-compilation nil)
+   native-comp-jit-compilation nil)
+
+(setq native-comp-speed -1) ;; disable native comp
 
 (setq package-enable-at-startup nil)
 
