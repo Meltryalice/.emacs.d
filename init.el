@@ -2,6 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(when (boundp 'load-path-filter-function)
+  (setq load-path-filter-function #'load-path-filter-cache-directory-files))
+
 ;;一些有关启动加速的设置
 (setq-default mode-line-format nil)
 (setq auto-mode-case-fold nil)

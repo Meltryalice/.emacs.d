@@ -38,8 +38,8 @@
 (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Maple Mono NF CN" :size 25))
 
 ;; 设置窗口大小，仅仅在图形界面需要设置
-(add-to-list 'default-frame-alist '(width . 90)) ; （可选）设定启动图形界面时的初始 Frame 宽度（字符数）
-(add-to-list 'default-frame-alist '(height . 30)) ; （可选）设定启动图形界面时的初始 Frame 高度（字符数）
+(add-to-list 'default-frame-alist '(width . 120)) ; （可选）设定启动图形界面时的初始 Frame 宽度（字符数）
+(add-to-list 'default-frame-alist '(height . 40)) ; （可选）设定启动图形界面时的初始 Frame 高度（字符数）
 
 ;; 禁用一些GUI特性
 (setq use-dialog-box nil)               ; 鼠标操作不使用对话框
@@ -53,8 +53,6 @@
 
 ;; 设置缓冲区的文字方向为从左到右
 (setq bidi-paragraph-direction 'left-to-right)
-;; 禁止使用双向括号算法
-;; (setq bidi-inhibit-bpa t)
 
 ;; 设置自动折行宽度为80个字符，默认值为70
 (setq-default fill-column 80)
@@ -127,16 +125,9 @@
 ;; 在模式栏上显示当前光标的列号
 (column-number-mode t)
 
-(when (fboundp 'set-charset-priority)
-    (set-charset-priority 'unicode))
-  (prefer-coding-system 'utf-8)
-  (setq locale-coding-system 'utf-8)
-  (setq system-time-locale "C")
-  (unless (eq system-type 'windows-nt)
-    (set-selection-coding-system 'utf-8))
-
 (use-package doom-modeline
   :ensure t
+  :defer t
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-irc nil)
@@ -150,42 +141,8 @@
 
 (use-package minions
   :ensure t
+  :defer t
   :hook (after-init . minions-mode))
-
-(use-package keycast
-  :ensure t
-  :hook (after-init . keycast-mode)
-  ;; :custom-face
-  ;; (keycast-key ((t (:background "#0030b4" :weight bold))))
-  ;; (keycast-command ((t (:foreground "#0030b4" :weight bold))))
-  :config
-  ;; set for doom-modeline support
-  ;; With the latest change 72d9add, mode-line-keycast needs to be modified to keycast-mode-line.
-  (define-minor-mode keycast-mode
-    "Show current command and its key binding in the mode line (fix for use with doom-mode-line)."
-    :global t
-    (if keycast-mode
-        (progn
-          (add-hook 'pre-command-hook 'keycast--update t)
-          (add-to-list 'global-mode-string '("" keycast-mode-line "  ")))
-      (remove-hook 'pre-command-hook 'keycast--update)
-      (setq global-mode-string (delete '("" keycast-mode-line "  ") global-mode-string))
-      ))
-
-  (dolist (input '(self-insert-command
-                   org-self-insert-command))
-    (add-to-list 'keycast-substitute-alist `(,input "." "Typing…")))
-
-  (dolist (event '(mouse-event-p
-                   mouse-movement-p
-                   mwheel-scroll))
-    (add-to-list 'keycast-substitute-alist `(,event nil)))
-
-  (setq keycast-log-format "%-20K%C\n")
-  (setq keycast-log-frame-alist
-        '((minibuffer . nil)))
-  (setq keycast-log-newest-first t)
-  )
 
 (provide 'init-ui)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

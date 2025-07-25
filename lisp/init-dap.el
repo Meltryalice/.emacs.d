@@ -4,6 +4,7 @@
 
 (use-package dap-mode
   :ensure t
+  :defer t
   :after lsp-deferred
   :init (add-to-list 'image-types 'svg)
   :commands dap-debug
@@ -57,9 +58,9 @@
   :config
   (dap-ui-mode 1)
   (defun dap-hydra ()
- 	 (interactive)
- 	 "Run `dap-hydra/body'."
-	 (dap-hydra/body)))
+    (interactive)
+    "Run `dap-hydra/body'."
+    (dap-hydra/body)))
 
 (provide 'init-dap)
 

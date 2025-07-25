@@ -8,6 +8,7 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (setq treesit-font-lock-level 4)
+  :defer t
   :hook (after-init . global-treesit-auto-mode))
 
 (provide 'init-ts)

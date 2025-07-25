@@ -5,6 +5,7 @@
 ;; use-package with package.el:
 (use-package dashboard
   :ensure t
+  :defer t
   :config
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
@@ -14,11 +15,11 @@
   (setq dashboard-display-icons-p t) 
   (setq dashboard-icon-type 'nerd-icons) 
   (setq dashboard-items '((recents . 5)  
-    (bookmarks . 5) 
-    (projects . 10)))
+		  (bookmarks . 5) 
+		  (projects . 10)))
   (dashboard-modify-heading-icons '((recents   . "nf-oct-history")
-                                    (bookmarks . "nf-oct-bookmark")
-				    (projects  . "nf-oct-briefcase")))
+                         (bookmarks . "nf-oct-bookmark")
+			 (projects  . "nf-oct-briefcase")))
   :hook (after-init . dashboard-open)
   )
 

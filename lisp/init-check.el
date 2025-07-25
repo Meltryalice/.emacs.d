@@ -4,6 +4,7 @@
 
 (use-package flycheck
   :ensure t
+  :defer t
   :config
   (setq truncate-lines nil)
   :hook

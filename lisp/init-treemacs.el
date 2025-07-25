@@ -93,15 +93,18 @@
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-projectile
+  :defer  t
   :after (treemacs projectile)
   :ensure t)
 
 (use-package treemacs-icons-dired
+  :defer t
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :ensure t)
 
 (use-package treemacs-magit
   :after (treemacs magit)
+  :defer t
   :ensure t)
 
 (provide 'init-treemacs)
