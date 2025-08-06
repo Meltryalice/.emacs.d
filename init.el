@@ -9,15 +9,16 @@
 (setq-default mode-line-format nil)
 (setq auto-mode-case-fold nil)
 (unless (or (daemonp) noninteractive init-file-debug)
+
   ;; Temporarily suppress file-handler processing to speed up startup
   (let ((default-handlers file-name-handler-alist))
-    (setq file-name-handler-alist nil)
-    ;; Recover handlers after startup
-    (add-hook 'emacs-startup-hook
-              (lambda ()
-                (setq file-name-handler-alist
-                      (delete-dups (append file-name-handler-alist default-handlers))))
-              101)))
+   (setq file-name-handler-alist nil)
+   ;; Recover handlers after startup
+   (add-hook 'emacs-startup-hook
+          (lambda ()
+           (setq file-name-handler-alist
+               (delete-dups (append file-name-handler-alist default-handlers))))
+          101)))
 
 ;;指定源码加载路径
 (defun update-load-path (&rest _)
@@ -46,6 +47,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-tools)
 (require 'init-treemacs)
 (require 'init-dashboard)
+(require 'init-prog)
 (require 'init-lsp)
 (require 'init-dap)
 (require 'init-ts)

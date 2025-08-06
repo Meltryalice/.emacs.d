@@ -2,33 +2,27 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package lsp-mode
- :ensure t
- :init
- ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
- (setq lsp-keymap-prefix "C-c l"
-	lsp-file-watch-threshold 500)
- :hook ((js-ts-mode . lsp-deferred)
-	(typescript-ts-mode . lsp-deferred)
-        (lsp-mode . lsp-enable-which-key-integration)) ; which-key integration
- :commands (lsp-deferred)
- :config
- (setq lsp-completion-provider :none)
- (setq lsp-headerline-breadcrumb-enable t)
- :bind
- ("C-c l s" . lsp-ivy-workspace-symbol))
+(use-package eglot
+  :defer t
+  :hook ((prog-mode . (lambda ()
+                 (unless (derived-mode-p
+                       'emacs-lisp-mode 'lisp-mode
+                       'makefile-mode 'snippet-mode
+                       'ron-mode)
+                   (eglot-ensure))))
+       ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
+  :init
+  (setq read-process-output-max (* 1024 1024)) ; 1MB
+  (setq eglot-autoshutdown t
+      eglot-events-buffer-size 0
+      eglot-send-changes-idle-time 0.5))
 
-(use-package lsp-ui
- :ensure t
- :defer 2 
- :config
- (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
- (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
- (setq lsp-ui-doc-position 'top))
+(use-package consult-eglot
+  :defer t
+  :after consult eglot
+  :bind (:map eglot-mode-map
+          ("C-M-." . consult-eglot-symbols)))
 
-(use-package consult-lsp
-  :ensure t
-  :after (lsp-mode))
 
 (provide 'init-lsp)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

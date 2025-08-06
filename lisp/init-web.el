@@ -10,12 +10,6 @@
   (setq js2-basic-offset 2) 
   (setq js2-bounce-indent-p t))
 
-(use-package prettier
-  :diminish
-  :defines prettier-pre-warm
-  :hook ((js-ts-mode css-ts-modey web-mode) . prettier-mode)
-  :init (setq prettier-pre-warm 'none))
-
 (use-package web-mode
   :mode "\\.\\(phtml\\|php\\|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\|hbs\\|ejs\\|jade\\|swig\\|tm?pl\\|vue\\)$"
   :config

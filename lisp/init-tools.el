@@ -2,28 +2,17 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package rainbow-delimiters
-  :ensure t
-  :defer t
-  :hook (prog-mode . rainbow-delimiters-mode))
-
 (use-package projectile
- :ensure t
- :defer 2 
- :bind (("C-c p" . projectile-command-map))
- :config
- (setq projectile-mode-line "Projectile")
- (setq projectile-track-known-projects-automatically nil))
-
-(use-package counsel-projectile
   :ensure t
-  :defer t
-  :after (projectile)
-  :init (counsel-projectile-mode))
+  :defer 2
+  :bind (("C-c p" . projectile-command-map))
+  :config
+  (setq projectile-mode-line "Projectile")
+  (setq projectile-track-known-projects-automatically nil))
 
-(use-package magit 
- :ensure t
- :defer t)
+(use-package magit
+  :ensure t
+  :defer t)
 
 (use-package ace-window
   :ensure t
@@ -57,7 +46,6 @@
 (use-package dirvish
   :ensure t
   :defer t
-  
   :hook (after-init . dirvish-override-dired-mode))
 
 (provide 'init-tools)

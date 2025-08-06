@@ -2,65 +2,67 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package dap-mode
+(use-package dape
   :ensure t
   :defer t
-  :after lsp-deferred
-  :init (add-to-list 'image-types 'svg)
-  :commands dap-debug
-  :custom
-  (dap-auto-configure-mode t)
-  :hydra
-  (dap-hydra
-   (:color pink :hint nil :foreign-keys run)
-   "
- ^Stepping^     ^Switch^         ^Breakpoints^     ^Debug^           ^Eval^           
- ^^^^^^^^---------------------------------------------------------------------------------------------------------------
- _n_: Next      _ss_: Session      _bb_: Toggle     _dd_: Debug         _ee_: Eval         
- _i_: Step in    _st_: Thread       _bd_: Delete     _dr_: Debug recent     _er_: Eval region
- _o_: Step out    _sf_: Stack frame    _ba_: Add       _dl_: Debug last      _es_: Eval thing at point
- _c_: Continue    _su_: Up stack frame   _bc_: Set condition  _de_: Edit debug template  _ea_: Add expression.
- _r_: Restart frame _sd_: Down stack frame  _bh_: Set hit count  _ds_: Debug restart
- _Q_: Disconnect   _sl_: List locals    _bl_: Set log message
-          _sb_: List breakpoints
-          _se_: List expressions
- "
-   ("n" dap-next)
-   ("i" dap-step-in)
-   ("o" dap-step-out)
-   ("c" dap-continue)
-   ("r" dap-restart-frame)
-   ("ss" dap-switch-session)
-   ("st" dap-switch-thread)
-   ("sf" dap-switch-stack-frame)
-   ("su" dap-up-stack-frame)
-   ("sd" dap-down-stack-frame)
-   ("sl" dap-ui-locals)
-   ("sb" dap-ui-breakpoints)
-   ("se" dap-ui-expressions)
-   ("bb" dap-breakpoint-toggle)
-   ("ba" dap-breakpoint-add)
-   ("bd" dap-breakpoint-delete)
-   ("bc" dap-breakpoint-condition)
-   ("bh" dap-breakpoint-hit-condition)
-   ("bl" dap-breakpoint-log-message)
-   ("dd" dap-debug)
-   ("dr" dap-debug-recent)
-   ("ds" dap-debug-restart)
-   ("dl" dap-debug-last)
-   ("de" dap-debug-edit-template)
-   ("ee" dap-eval)
-   ("ea" dap-ui-expressions-add)
-   ("er" dap-eval-region)
-   ("es" dap-eval-thing-at-point)
-   ("q" nil "quit" :color blue)
-   ("Q" dap-disconnect "Disconnect" :color blue))
+  :bind (("<f5>" . dape)
+	 ("M-<f5>" . dape-hydra/body))
+  :custom (dape-buffer-window-arrangment 'right)
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Debug" 'codicon "nf-cod-debug") :color pink :quit-key ("q" "C-g"))
+   ("Stepping"
+    (("n" dape-next "
+")
+     ("s" dape-step-in "step in")
+     ("o" dape-step-out "step out")
+     ("c" dape-
+      "continue")
+     ("p" dape-pause "pause")
+     ("k" dape-kill "kill")
+     ("r" dape-restart "restart")
+     ("D" dape-disconnect-quit "disconnect"))
+    "Switch"
+    (("m" dape-read-memory "memory")
+     ("t" dape-select-thread "thread")
+     ("w" dape-watch-dwim "watch")
+     ("S" dape-select-stack
+      "stack")
+     ("i" dape-info "info")
+     ("R" dape-repl "repl"))
+   "Breakpoints"
+   (("b" dape-breakpoint-toggle "toggle")
+    ("l" dape-breakpoint-log "log")
+    ("e" dape-breakpoint-expression "expression")
+    ("B" dape-breakpoint-remove-all "clear"))
+   "Debug"
+   (("d" dape "dape")
+    ("Q" dape-quit "quit" :exit t))))
   :config
-  (dap-ui-mode 1)
-  (defun dap-hydra ()
-    (interactive)
-    "Run `dap-hydra/body'."
-    (dap-hydra/body)))
+  (add-to-list 'dape-configs
+           `(vscode-js-node
+             modes (js-mode js-ts-mode typescript-mode typescript-ts-mode)
+             host "localhost"
+             port 8123
+             command "node"
+             command-cwd ,(file-name-concat user-emacs-directory "debug-adapters/vscode-js-debug/dist")
+             command-args ("src/dapDebugServer.js" "8123")
+             :type "pwa-node"
+             :request "launch"
+             :cwd dape-cwd-fn
+             :program dape-buffer-default
+             :outputCapture "console"
+             :sourceMapRenames t
+             :pauseForSourceMap nil
+             :enableContentValidation t
+             :autoAttachChildProcesses t
+             :console "internalConsole"
+             :killBehavior "forceful"))
+  ;; Save buffers on startup, useful for interpreted languages
+  (add-hook 'dape-on-start-hooks
+         (defun dape--save-on-start ()
+           (save-some-buffers t t)))
+  ;; Display hydra on startup
+  (add-hook 'dape-on-start-hooks #'dape-hydra/body))
 
 (provide 'init-dap)
 

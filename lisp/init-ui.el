@@ -33,9 +33,9 @@
   )
 
 (set-face-attribute 'default nil :font (font-spec :family "Maple Mono" :size 25 :slant 'italic))
-(set-fontset-font t 'unicode "FiraCode Nerd Font" nil 'prepend) 
+(set-fontset-font t 'unicode "FiraCode Nerd Font" nil 'prepend)
 (set-fontset-font t 'emoji (font-spec :family "Noto Color Emoji") nil 'prepend)
-(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Maple Mono NF CN" :size 25))
+(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai"))
 
 ;; 设置窗口大小，仅仅在图形界面需要设置
 (add-to-list 'default-frame-alist '(width . 120)) ; （可选）设定启动图形界面时的初始 Frame 宽度（字符数）
