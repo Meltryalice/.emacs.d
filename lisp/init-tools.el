@@ -48,6 +48,38 @@
   :defer t
   :hook (after-init . dirvish-override-dired-mode))
 
+(use-package nov
+  :ensure t
+  :defer t
+  :mode ("\\.epub\\'" . nov-mode)
+  :bind (:map nov-mode-map
+          ("j" . scroll-up-line)
+          ("k" . scroll-down-line))
+  )
+
+(use-package calibredb
+  :ensure t
+  :commands calibredb
+  :bind ("\e\e b" . calibredb)
+  :config
+  (setq calibredb-root-dir "~/book")
+  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+  (setq calibredb-library-alist '(("~/book")
+                       ))
+  )
+
+(use-package olivetti
+  :ensure t
+  :defer t
+  :hook
+  (nov-mode . olivetti-mode))
+
+(use-package emacs
+  :ensure nil
+  :config
+  (when (olivetti-mode)
+   (display-line-numbers-mode nil)))
+
 (provide 'init-tools)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
