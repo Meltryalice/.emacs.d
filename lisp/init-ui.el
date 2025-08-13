@@ -29,14 +29,21 @@
   ;; The Nerd Font you want to use in GUI
   ;; "Symbols Nerd Font Mono" is the default and is recommended
   ;; but you can use any other Nerd Font if you want
-  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  (nerd-icons-font-family "Maple Mono NF")
   )
 
 (set-face-attribute 'default nil :font (font-spec :family "Maple Mono" :size 25 :slant 'italic))
+(set-fontset-font t 'unicode "Symbola" nil 'prepend)
+(set-fontset-font t 'emoji (font-spec :family "Noto Color Emoji") nil 'prepend)
 (set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
 (set-fontset-font t 'han (font-spec :family "LXGW Wenkai" :weight 'regular))
 (set-fontset-font t 'chinese-cns11643-1 (font-spec :family "LXGW Wenkai" :weight 'regular))
 (set-fontset-font t 'kana (font-spec :family "Sarasa Gothic J" :weight 'normal :slant 'normal))
+
+(use-package emojify
+  :ensure t
+  :defer t
+  :hook (after-init . global-emojify-mode))
 
 ;; 设置窗口大小，仅仅在图形界面需要设置
 (add-to-list 'default-frame-alist '(width . 120)) ; （可选）设定启动图形界面时的初始 Frame 宽度（字符数）
@@ -144,6 +151,18 @@
   :ensure t
   :defer t
   :hook (after-init . minions-mode))
+
+;; Show line numbers
+(use-package display-line-numbers
+  :ensure nil
+  :hook
+  ((prog-mode
+    conf-mode toml-ts-mode
+    yaml-mode yaml-ts-mode)
+   . display-line-numbers-mode)
+  :init
+  (setq display-line-numbers-width-start t)
+  (setq display-line-numbers-type 'relative))
 
 (provide 'init-ui)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

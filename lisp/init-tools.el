@@ -78,8 +78,32 @@
   :ensure nil
   :config
   (when (olivetti-mode)
-   (display-line-numbers-mode nil)))
+    (display-line-numbers-mode nil)))
 
+(use-package rime
+  :ensure t
+  :defer t
+  :init
+  (setq rime-user-data-dir "~/.config/fcitx/rime/")
+  (setq rime-posframe-properties
+	(list :background-color "#333333"
+              :foreground-color "#dcdccc"
+              :font "LXGW Wenkai-20"
+              :internal-border-width 15))
+
+  (setq default-input-method "rime"
+	rime-show-candidate 'posframe)
+  :custom
+  (default-input-method "rime"))
+
+(use-package telega
+  :ensure t
+  :defer t
+  :init
+  (setq telega-proxies
+	(list '(:server "127.0.0.1" :port 7897 :enable t
+			:type (:@type "proxyTypeSocks5")))))
+  
 (provide 'init-tools)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

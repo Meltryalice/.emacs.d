@@ -45,8 +45,6 @@
 (electric-pair-mode t)
 (column-number-mode t)
 (add-hook 'prog-mode-hook #'hs-minor-mode)
-(global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'relative)
 
 (provide 'init-edit)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

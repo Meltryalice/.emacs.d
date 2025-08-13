@@ -175,6 +175,9 @@
     :hook (global-corfu-mode . corfu-terminal-mode)))
 
 (use-package nerd-icons-corfu
+  :ensure t
+  :defer t
+  :autoload nerd-icons-corfu-formatter
   :after corfu
   :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
@@ -184,7 +187,7 @@
   :diminish yas-minor-mode
   :defer t
   :hook ((after-init . yas-reload-all)
-       ((prog-mode LaTeX-mode org-mode) . yas-minor-mode))
+	 ((prog-mode LaTeX-mode org-mode) . yas-minor-mode))
   :config
   ;; Suppress warning for yasnippet code.
   (require 'warnings)
@@ -192,14 +195,14 @@
 
   (setq yas-prompt-functions '(yas-x-prompt yas-dropdown-prompt))
   (defun smarter-yas-expand-next-field ()
-   "Try to `yas-expand' then `yas-next-field' at current cursor position."
-   (interactive)
-   (let ((old-point (point))
-       (old-tick (buffer-chars-modified-tick)))
-     (yas-expand)
-     (when (and (eq old-point (point))
-             (eq old-tick (buffer-chars-modified-tick)))
-       (ignore-errors (yas-next-field))))))
+    "Try to `yas-expand' then `yas-next-field' at current cursor position."
+    (interactive)
+    (let ((old-point (point))
+	  (old-tick (buffer-chars-modified-tick)))
+      (yas-expand)
+      (when (and (eq old-point (point))
+		 (eq old-tick (buffer-chars-modified-tick)))
+	(ignore-errors (yas-next-field))))))
 
 (use-package yasnippet-snippets
   :ensure t
@@ -270,6 +273,7 @@
 
 (use-package embark-consult
   :ensure t
+  :defer t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package cape
