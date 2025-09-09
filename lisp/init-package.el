@@ -28,6 +28,5 @@
     (defalias 'package-upgrade-all #'auto-package-update-now)))
 
 (provide 'init-package)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-package.el ends here

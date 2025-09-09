@@ -11,7 +11,7 @@
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "To Alice")
   (setq dashboard-projects-backend 'projectile) 
-  (setq dashboard-startup-banner "~/.emacs.d/lisp/pic/logo.png")
+  (setq dashboard-startup-banner "~/.emacs.d/lisp/pic/logo.xpm")
   (setq dashboard-display-icons-p t) 
   (setq dashboard-icon-type 'nerd-icons) 
   (setq dashboard-items '((recents . 5)  

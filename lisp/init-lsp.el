@@ -2,27 +2,43 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package eglot
-  :defer t
-  :hook ((prog-mode . (lambda ()
-                 (unless (derived-mode-p
-                       'emacs-lisp-mode 'lisp-mode
-                       'makefile-mode 'snippet-mode
-                       'ron-mode)
-                   (eglot-ensure))))
-       ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
+(use-package lsp-mode
+  :ensure t
   :init
-  (setq read-process-output-max (* 1024 1024)) ; 1MB
-  (setq eglot-autoshutdown t
-      eglot-events-buffer-size 0
-      eglot-send-changes-idle-time 0.5))
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l"
+	lsp-file-watch-threshold 500)
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration) ; which-key integration
+  (js-ts-mode . lsp-deferred)
+  (typescript-ts-mode . lsp-deferred)
+  (web-mode . lsp-deferred)
+  :commands (lsp-deferred)
+  :config
+  (setq lsp-completion-provider :none) ;; 阻止 lsp 重新设置 company-backend 而覆盖我们 yasnippet 的设置
+  (setq lsp-headerline-breadcrumb-enable t)
+  :bind
+  ("C-c l s" . lsp-ivy-workspace-symbol)) ;; 可快速搜索工作区内的符号（类名、函数名、变量名等）
 
-(use-package consult-eglot
-  :defer t
-  :after consult eglot
-  :bind (:map eglot-mode-map
-          ("C-M-." . consult-eglot-symbols)))
+(use-package lsp-ui
+  :ensure t
+  :commands
+  (lsp-ui-doc-show
+   lsp-ui-doc-glance)
+  :bind (:map lsp-mode-map
+              ("C-c C-d" . 'lsp-ui-doc-glance))
+  :after (lsp-mode)
+  :config (setq lsp-ui-doc-enable t
+                evil-lookup-func #'lsp-ui-doc-glance ; Makes K in evil-mode toggle the doc for symbol at point
+                lsp-ui-doc-show-with-cursor nil      ; Don't show doc when cursor is over symbol - too distracting
+                lsp-ui-doc-include-signature t       ; Show signature
+                lsp-ui-doc-position 'at-point))
 
+(use-package consult-lsp
+  :ensure t
+  :after (lsp-mode)
+  :bind (:map lsp-mode-map
+              ("C-M-." . consult-lsp-symbols)))
 
 (provide 'init-lsp)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -42,6 +42,29 @@
   (auto-revert-check-vc-info t)
   (global-auto-revert-non-file-buffers t))
 
+(use-package xclip
+  :ensure t
+  :defer t
+  :hook
+  (after-init . xclip-mode)
+  :config
+  (when (eq xclip-method 'powershell)
+    (setq xclip-program "powershell.exe"))
+
+  ;; @see https://github.com/microsoft/wslg/issues/15#issuecomment-1796195663
+  (when (eq xclip-method 'wl-copy)
+    (set-clipboard-coding-system 'gbk) ; for wsl
+    (setq interprogram-cut-function
+          (lambda (text)
+            (start-process "xclip"  nil xclip-program "--trim-newline" "--type" "text/plain;charset=utf-8" text)))))
+
+;; 剪贴板
+(setq select-active-regions nil)
+(setq select-enable-clipboard 't)
+(setq select-enable-primary nil)
+(setq interprogram-cut-function #'gui-select-text)
+(set-clipboard-coding-system 'gbk-dos)
+
 (electric-pair-mode t)
 (column-number-mode t)
 (add-hook 'prog-mode-hook #'hs-minor-mode)

@@ -78,9 +78,9 @@
   :hook ((js-ts-mode . prettier-js-mode)))
 
 
-  (use-package yaml-mode
-    :ensure t
-    :mode "\.yml\'")
+(use-package yaml-mode
+  :ensure t
+  :mode "\.yml\'")
 
 (provide 'init-prog)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

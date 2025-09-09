@@ -2,20 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package flymake
-  :defer t
-  :hook (prog-mode . flymake-mode)
-  :bind (:map flymake-mode-map
-          ("C-c ! n" . flymake-goto-next-error)
-          ("C-c ! p" . flymake-goto-prev-error)
-          ("C-c ! l" . flymake-show-buffer-diagnostics)))
-
-(use-package flymake-popon
+(use-package flycheck
   :ensure t
-  :defer t
-  :diminish
-  :hook (flymake-mode . flymake-popon-mode)
-  :init (setq flymake-popon-width 80))
+  :config
+  (setq truncate-lines nil) ; 如果单行信息很长会自动换行
+  :hook
+  (prog-mode . flycheck-mode))
 
 (provide 'init-check)
 

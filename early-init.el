@@ -6,13 +6,11 @@
 (setq load-file-rep-suffixes '(""))
 
 (setq native-comp-deferred-compilation nil
-     native-comp-jit-compilation nil)
+      native-comp-jit-compilation nil)
 
 (setq native-comp-speed -1) ;; disable native comp
 
 (setq package-enable-at-startup nil)
-
-(setq use-package-enable-imenu-support t)
 
 (setq load-prefer-newer noninteractive)
 

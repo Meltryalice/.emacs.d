@@ -32,22 +32,16 @@
   (nerd-icons-font-family "Maple Mono NF")
   )
 
-(set-face-attribute 'default nil :font (font-spec :family "Maple Mono" :size 25 :slant 'italic))
-(set-fontset-font t 'unicode "Symbola" nil 'prepend)
-(set-fontset-font t 'emoji (font-spec :family "Noto Color Emoji") nil 'prepend)
-(set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
-(set-fontset-font t 'han (font-spec :family "LXGW Wenkai" :weight 'regular))
-(set-fontset-font t 'chinese-cns11643-1 (font-spec :family "LXGW Wenkai" :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "Maple Mono" :size 27 :slant 'italic))
+(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji") nil 'append)
+(set-fontset-font t 'han (font-spec :family "LXGW Wenkai"))
 (set-fontset-font t 'kana (font-spec :family "Sarasa Gothic J" :weight 'normal :slant 'normal))
-
-(use-package emojify
-  :ensure t
-  :defer t
-  :hook (after-init . global-emojify-mode))
+(custom-set-faces '(nobreak-space ((t (:foreground "#1a1b26")))))
 
 ;; 设置窗口大小，仅仅在图形界面需要设置
-(add-to-list 'default-frame-alist '(width . 120)) ; （可选）设定启动图形界面时的初始 Frame 宽度（字符数）
-(add-to-list 'default-frame-alist '(height . 40)) ; （可选）设定启动图形界面时的初始 Frame 高度（字符数）
+(setq default-frame-alist '((width . 90)
+                            (height . 30)
+                            (alpha-background . 90)))
 
 ;; 禁用一些GUI特性
 (setq use-dialog-box nil)               ; 鼠标操作不使用对话框
@@ -116,10 +110,6 @@
 (setq mark-ring-max 6)
 (setq global-mark-ring-max 6)
 
-;; 设置 emacs-lisp 的限制
-(setq max-lisp-eval-depth 10000)        ; 默认值为 800
-(setq max-specpdl-size 10000)           ; 默认值为 1600
-
 ;; 启用 `list-timers', `list-threads' 这两个命令
 (put 'list-timers 'disabled nil)
 (put 'list-threads 'disabled nil)
@@ -155,10 +145,11 @@
 ;; Show line numbers
 (use-package display-line-numbers
   :ensure nil
+  :defer t
   :hook
-  ((prog-mode
-    conf-mode toml-ts-mode
-    yaml-mode yaml-ts-mode)
+  ((prog-mode org-mode
+	      conf-mode toml-ts-mode
+	      yaml-mode yaml-ts-mode)
    . display-line-numbers-mode)
   :init
   (setq display-line-numbers-width-start t)
