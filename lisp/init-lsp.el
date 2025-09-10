@@ -34,7 +34,9 @@
 
 (use-package consult-lsp
   :ensure t
-  :hook (lsp-mode . consult-lsp-symbols))
+  :after (lsp-mode)
+  :bind (:map lsp-mode-map
+              ("C-M-." . consult-lsp-symbols)))
 
 (provide 'init-lsp)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
