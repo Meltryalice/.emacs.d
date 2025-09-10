@@ -34,7 +34,7 @@
 
 (use-package consult-lsp
   :ensure t
-  :hook (lsp-mode . consult-lsp-symbols)
+  :hook (lsp-mode . consult-lsp-symbols))
 
 (provide 'init-lsp)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
