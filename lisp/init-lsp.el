@@ -15,7 +15,6 @@
   (web-mode . lsp-deferred)
   :commands (lsp-deferred)
   :config
-  (setq lsp-completion-provider :none) ;; 阻止 lsp 重新设置 company-backend 而覆盖我们 yasnippet 的设置
   (setq lsp-headerline-breadcrumb-enable t)
   :bind
   ("C-c l s" . lsp-ivy-workspace-symbol)) ;; 可快速搜索工作区内的符号（类名、函数名、变量名等）
@@ -29,16 +28,13 @@
               ("C-c C-d" . 'lsp-ui-doc-glance))
   :after (lsp-mode)
   :config (setq lsp-ui-doc-enable t
-                evil-lookup-func #'lsp-ui-doc-glance ; Makes K in evil-mode toggle the doc for symbol at point
                 lsp-ui-doc-show-with-cursor nil      ; Don't show doc when cursor is over symbol - too distracting
                 lsp-ui-doc-include-signature t       ; Show signature
                 lsp-ui-doc-position 'at-point))
 
 (use-package consult-lsp
   :ensure t
-  :after (lsp-mode)
-  :bind (:map lsp-mode-map
-              ("C-M-." . consult-lsp-symbols)))
+  :hook (lsp-mode . consult-lsp-symbols)
 
 (provide 'init-lsp)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

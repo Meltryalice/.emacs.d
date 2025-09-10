@@ -2,6 +2,8 @@
 
 ;;; Code:
 
+(setq gc-cons-threshold 100000000)
+
 (setq load-suffixes '(".elc" ".el"))
 (setq load-file-rep-suffixes '(""))
 
