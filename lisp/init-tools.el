@@ -60,7 +60,7 @@
     (face-remap-add-relative 'variable-pitch :family "Maple Mono NF CN"
                              :height 5.0
 			     :size 40))
-  
+  (add-hook 'nov-mode-hook 'my-nov-font-setup)
   :init
   (setq nov-text-width 1000)
   (setq visual-fill-column-center-text t)
@@ -74,8 +74,7 @@
   :config
   (setq calibredb-root-dir "~/book")
   (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
-  (setq calibredb-library-alist '(("~/book")
-				  ))
+  (setq calibredb-library-alist '(("~/book")))
   )
 
 (use-package olivetti
@@ -87,6 +86,7 @@
 (use-package rime
   :ensure t
   :defer t
+  :bind ("C-z" . rime-inline-ascii)
   :init
   (setq rime-user-data-dir "~/.config/fcitx/rime/")
   (setq rime-posframe-properties
@@ -94,9 +94,12 @@
               :foreground-color "#dcdccc"
               :font "LXGW Wenkai-20"
               :internal-border-width 15))
-  (add-hook 'nov-mode-hook 'my-nov-font-setup)
   (setq default-input-method "rime"
 	rime-show-candidate 'posframe)
+  (setq rime-disable-predicates
+	'(rime-predicate-prog-in-code-p
+	  rime-predicate-space-after-cc-p
+	  rime-predicate-punctuation-after-space-cc-p))
   :custom
   (default-input-method "rime"))
 
@@ -129,10 +132,6 @@
   (setq telega-proxies
 	(list '(:server "127.0.0.1" :port 7897 :enable t
 			:type (:@type "proxyTypeSocks5")))))
-
-(use-package mpdel
-  :ensure t
-  :defer t)
 
 (provide 'init-tools)
 
