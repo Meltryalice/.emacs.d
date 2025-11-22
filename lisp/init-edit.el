@@ -65,6 +65,7 @@
 (setq interprogram-cut-function #'gui-select-text)
 (set-clipboard-coding-system 'gbk-dos)
 
+
 (electric-pair-mode t)
 (column-number-mode t)
 (add-hook 'prog-mode-hook #'hs-minor-mode)

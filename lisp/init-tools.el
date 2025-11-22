@@ -96,10 +96,10 @@
               :internal-border-width 15))
   (setq default-input-method "rime"
 	rime-show-candidate 'posframe)
-  (setq rime-disable-predicates
-	'(rime-predicate-prog-in-code-p
-	  rime-predicate-space-after-cc-p
-	  rime-predicate-punctuation-after-space-cc-p))
+					;(setq rime-disable-predicates
+					;'(rime-predicate-prog-in-code-p
+					; rime-predicate-space-after-cc-p
+					;rime-predicate-punctuation-after-space-cc-p))
   :custom
   (default-input-method "rime"))
 
