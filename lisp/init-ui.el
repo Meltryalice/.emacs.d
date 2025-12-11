@@ -32,7 +32,7 @@
   (nerd-icons-font-family "Maple Mono NF")
   )
 
-(set-face-attribute 'default nil :font (font-spec :family "Maple Mono" :size 27 :slant 'italic ))
+(set-face-attribute 'default nil :font (font-spec :family "Maple Mono" :size 20 :slant 'italic ))
 (set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji") nil 'append)
 (set-fontset-font t 'han (font-spec :family "LXGW Wenkai"))
 (set-fontset-font t 'kana (font-spec :family "Sarasa Gothic J" :weight 'normal :slant 'normal))

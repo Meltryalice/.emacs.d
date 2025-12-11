@@ -156,18 +156,32 @@
 )
 
 (use-package corfu
-  :ensure t
+  :autoload (corfu-quit consult-completion-in-region)
+  :functions (persistent-scratch-save corfu-move-to-minibuffer)
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 2)
+  (corfu-count 12)
   (corfu-preview-current nil)
+  (corfu-on-exact-match nil)
   (corfu-auto-delay 0.2)
   (corfu-popupinfo-delay '(0.4 . 0.2))
+  (global-corfu-modes '((not erc-mode
+                             circe-mode
+                             help-mode
+                             gud-mode
+                             vterm-mode)
+                        t))
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :bind ("M-/" . completion-at-point)
   :hook ((after-init . global-corfu-mode)
-         (global-corfu-mode . corfu-popupinfo-mode)))
+         (global-corfu-mode . corfu-popupinfo-mode)
+         (global-corfu-mode . corfu-history-mode))
+  :config
+  ;;Quit completion before saving
+  (add-hook 'before-save-hook #'corfu-quit)
+  (advice-add #'persistent-scratch-save :before #'corfu-quit))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal

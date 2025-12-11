@@ -54,7 +54,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-check)
 (require 'init-org)
 (require 'init-web)
-(require 'init-markdown)
+;;(require 'init-markdown)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
 

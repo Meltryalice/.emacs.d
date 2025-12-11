@@ -26,11 +26,11 @@
   :custom
   (undo-tree-auto-save-history nil))
 
-(use-package good-scroll
-  :ensure t
-  :defer t
-  :if window-system
-  :hook (after-init . good-scroll-mode))
+;(use-package good-scroll
+;  :ensure t
+;  :defer t
+;  :if window-system
+;  :hook (after-init . good-scroll-mode))
 
 (use-package which-key
   :ensure t
